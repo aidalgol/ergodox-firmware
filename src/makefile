@@ -1,16 +1,13 @@
-# -----------------------------------------------------------------------------
 # makefile for the ergoDOX firmware
+# Copyright (c) 2012 Ben Blazak <benblazak.dev@gmail.com>
+# Copyright (C) 2014  Aidan Gauland <aidalgol@amuri.net>
+# Released under The MIT License (MIT) (see "license.md")
 #
 # - .h file dependencies are automatically generated
 #
-# - This makefile was originally (extensively) modified from the WinAVR
-#   makefile template, mostly by removing stuff.  The copy I used was from
-#   [pjrc : usb_keyboard] (http://pjrc.com/teensy/usb_keyboard.zip).
-# -----------------------------------------------------------------------------
-# Copyright (c) 2012 Ben Blazak <benblazak.dev@gmail.com>
-# Released under The MIT License (MIT) (see "license.md")
-# Project located at <https://github.com/benblazak/ergodox-firmware>
-# -----------------------------------------------------------------------------
+# - This makefile was originally (extensively) modified from the WinAVR makefile
+#   template in <http://pjrc.com/teensy/usb_keyboard.zip>, mostly by removing
+#   stuff.
 
 include makefile-options
 
