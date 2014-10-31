@@ -36,21 +36,18 @@ SRC += $(wildcard lib-other/*/*/*.c)
 
 OBJ = $(SRC:%.c=%.o)
 
-CFLAGS := -mmcu=$(MCU)      # processor type of the Teensy 2.0
-CFLAGS += -DF_CPU=$(F_CPU)  # processor frequency; must match initialization in source
+CFLAGS_CPU := -mmcu=$(MCU)      # processor type of the Teensy 2.0
+CFLAGS_CPU += -DF_CPU=$(F_CPU)  # processor frequency; must match initialization in source
 
-CFLAGS += -DMAKEFILE_BOARD='$(strip $(BOARD))'
-CFLAGS += -DMAKEFILE_KEYBOARD='$(strip $(KEYBOARD))'
-CFLAGS += -DMAKEFILE_KEYBOARD_LAYOUT='$(strip $(LAYOUT))'
-CFLAGS += -DMAKEFILE_DEBOUNCE_TIME='$(strip $(DEBOUNCE_TIME))'
-CFLAGS += -DMAKEFILE_LED_BRIGHTNESS='$(strip $(LED_BRIGHTNESS))'
+CFLAGS_MAKEFILE_DEFINES := -DMAKEFILE_BOARD='$(strip $(BOARD))'
+CFLAGS_MAKEFILE_DEFINES += -DMAKEFILE_KEYBOARD='$(strip $(KEYBOARD))'
+CFLAGS_MAKEFILE_DEFINES += -DMAKEFILE_KEYBOARD_LAYOUT='$(strip $(LAYOUT))'
+CFLAGS_MAKEFILE_DEFINES += -DMAKEFILE_DEBOUNCE_TIME='$(strip $(DEBOUNCE_TIME))'
+CFLAGS_MAKEFILE_DEFINES += -DMAKEFILE_LED_BRIGHTNESS='$(strip $(LED_BRIGHTNESS))'
 
-CFLAGS += -std=gnu99 -Os
-CFLAGS += -Wall -Wstrict-prototypes
-
-CFLAGS += -fpack-struct -fshort-enums
-# These two options go together (see GCC manual for details).
-CFLAGS += -ffunction-sections -fdata-sections
+CFLAGS_WARNINGS := -Wall -Wstrict-prototypes
+CFLAGS_OPTIMISATIONS := -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections
+CFLAGS := -std=gnu99 $(CFLAGS_CPU) $(CFLAGS_MAKEFILE_DEFINES) $(CFLAGS_WARNINGS) $(CFLAGS_OPTIMISATIONS)
 
 # generate a link map with a cross reference table.
 LDFLAGS := -Wl,-Map=$(strip $(TARGET)).map,--cref
