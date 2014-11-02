@@ -20,19 +20,18 @@ SRC := $(wildcard *.c)
 KEYBOARD := $(strip $(KEYBOARD))
 LAYOUT   := $(strip $(LAYOUT))
 
-SRC += $(wildcard keyboard/$(KEYBOARD)*.c)
 SRC += $(wildcard keyboard/$(KEYBOARD)/*.c)
 SRC += $(wildcard keyboard/$(KEYBOARD)/controller/*.c)
 SRC += $(wildcard keyboard/$(KEYBOARD)/layout/$(LAYOUT)*.c)
 # Library files
 # - should be last in the list of files to compile, in case there are default
 #   macros that have to be overridden in other source files
-SRC += $(wildcard lib/*.c)
-SRC += $(wildcard lib/*/*.c)
-SRC += $(wildcard lib/*/*/*.c)
-SRC += $(wildcard lib-other/*.c)
-SRC += $(wildcard lib-other/*/*.c)
-SRC += $(wildcard lib-other/*/*/*.c)
+SRC += $(wildcard lib/key-functions/private.c)
+SRC += $(wildcard lib/key-functions/public/*.c)
+SRC += $(wildcard lib/twi/teensy-2-0.c)
+# SRC += $(wildcard lib/usb/*.c) # TODO
+SRC += $(wildcard lib-other/pjrc/usb_keyboard/usb_keyboard.c)
+
 
 OBJ = $(SRC:%.c=%.o)
 
