@@ -73,22 +73,20 @@ SIZE    := avr-size
 .PHONY: all clean
 
 all: $(TARGET).hex $(TARGET).eep
-	$(SIZE) --target=$(FORMAT) $(TARGET).hex
-	$(SIZE) --target=$(FORMAT) $(TARGET).eep
-	@echo 'you can load "$(TARGET).hex" and "$(TARGET).eep" onto the'
-	@echo 'Teensy using the Teensy loader'
+	@echo "You can now load $(TARGET).hex and $(TARGET).eep onto the"
+	@echo "Teensy using the Teensy loader."
 
 clean:
-	@echo --- cleaning ---
+	@echo "Cleaning build environment"
 	rm -f $(TARGET).*
 	find -name \*.o -delete -or -name \*.o.dep -delete
 
 $(TARGET).hex: $(TARGET).elf
-	@echo --- Generating hex file from ELF ---
+	@echo "Generating hex file from ELF"
 	$(OBJCOPY) -O $(FORMAT) -R .eeprom -R .fuse -R .lock -R .signature $< $@
 
 $(TARGET).eep: $(TARGET).elf
-	@echo --- Generating EEPROM file from ELF ---
+	@echo "Generating EEPROM file from ELF"
 	$(OBJCOPY) -O $(FORMAT) \
 		-j .eeprom \
 		--set-section-flags=.eeprom="alloc,load" \
@@ -97,12 +95,12 @@ $(TARGET).eep: $(TARGET).elf
 		$< $@ || exit 0
 
 $(TARGET).elf: $(OBJ)
-	@echo --- Linking objects into ELF: $@ ---
-	$(CC) $(CFLAGS) $(LDFLAGS) $^ --output $@
+	@echo "Linking objects into ELF"
+	@$(CC) $(CFLAGS) $(LDFLAGS) $^ --output $@
 
 %.o: %.c
-	@echo --- making $@ ---
-	$(CC) -c $(CFLAGS) $(GEN_DEP_FLAGS) $< -o $@
+	@echo Compiling $@
+	@$(CC) -c $(CFLAGS) $(GEN_DEP_FLAGS) $< -o $@
 
 
 -include $(OBJ:%=%.dep)
