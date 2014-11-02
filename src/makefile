@@ -11,10 +11,14 @@
 
 include makefile-options
 
-FORMAT := ihex        # The program binary's format
-MCU    := atmega32u4  # Processor type (for teensy 2.0)
-BOARD  := teensy-2-0  # See the libraries you're using for what's available
-F_CPU  := 16000000    # Processor speed in Hz; must match initialization in source
+# The program binary's format
+FORMAT := ihex
+# Processor type (for teensy 2.0)
+MCU    := atmega32u4
+# See the libraries you're using for what's available
+BOARD  := teensy-2-0
+# Processor speed in Hz; must match initialization in source
+F_CPU  := 16000000
 
 SRC := $(wildcard *.c)
 KEYBOARD := $(strip $(KEYBOARD))
@@ -35,8 +39,10 @@ SRC += $(wildcard lib-other/pjrc/usb_keyboard/usb_keyboard.c)
 
 OBJ = $(SRC:%.c=%.o)
 
-CFLAGS_CPU := -mmcu=$(MCU)      # processor type of the Teensy 2.0
-CFLAGS_CPU += -DF_CPU=$(F_CPU)  # processor frequency; must match initialization in source
+# Processor type of the Teensy 2.0
+CFLAGS_CPU := -mmcu=$(MCU)
+# Processor frequency; must match initialization in source
+CFLAGS_CPU += -DF_CPU=$(F_CPU)
 
 CFLAGS_MAKEFILE_DEFINES := -DMAKEFILE_BOARD='$(strip $(BOARD))'
 CFLAGS_MAKEFILE_DEFINES += -DMAKEFILE_KEYBOARD='$(strip $(KEYBOARD))'
@@ -55,7 +61,8 @@ LDFLAGS += -Wl,--relax
 # Discard unused functions and data.
 LDFLAGS += -Wl,--gc-sections
 
-GEN_DEP_FLAGS += -MMD -MP -MF $@.dep  # generate dependency files
+# Generate dependency files
+GEN_DEP_FLAGS += -MMD -MP -MF $@.dep
 
 
 CC      := avr-gcc
