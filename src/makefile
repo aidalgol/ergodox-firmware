@@ -76,12 +76,12 @@ clean:
 	rm -f $(TARGET).*
 	find -name \*.o -delete -or -name \*.o.dep -delete
 
-%.hex: %.elf
-	@echo --- making $@ ---
+$(TARGET).hex: $(TARGET).elf
+	@echo --- Generating hex file from ELF ---
 	$(OBJCOPY) -O $(FORMAT) -R .eeprom -R .fuse -R .lock -R .signature $< $@
 
-%.eep: %.elf
-	@echo --- making $@ ---
+$(TARGET).eep: $(TARGET).elf
+	@echo --- Generating EEPROM file from ELF ---
 	$(OBJCOPY) -O $(FORMAT) \
 		-j .eeprom \
 		--set-section-flags=.eeprom="alloc,load" \
@@ -89,8 +89,8 @@ clean:
 		--no-change-warnings \
 		$< $@ || exit 0
 
-%.elf: $(OBJ)
-	@echo --- making $@ ---
+$(TARGET).elf: $(OBJ)
+	@echo --- Linking objects into ELF: $@ ---
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ --output $@
 
 %.o: %.c
