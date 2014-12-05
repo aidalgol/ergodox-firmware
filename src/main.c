@@ -77,21 +77,18 @@ int main(void) {
 		//   - see the keyboard layout file ("keyboard/ergodox/layout/*.c") for
 		//     which key is assigned which function (per layer)
 		//   - see "lib/key-functions/public/*.c" for the function definitions
-		#define layer        main_arg_layer
-		#define is_pressed   main_arg_is_pressed
-		#define was_pressed  main_arg_was_pressed
 		for (uint8_t row = 0; row < KB_ROWS; row++) {
 			for (uint8_t col = 0; col < KB_COLUMNS; col++) {
-				is_pressed = (*main_kb_is_pressed)[row][col];
-				was_pressed = (*main_kb_was_pressed)[row][col];
+				main_arg_is_pressed = (*main_kb_is_pressed)[row][col];
+				main_arg_was_pressed = (*main_kb_was_pressed)[row][col];
 
-				if (is_pressed != was_pressed) {
-					if (is_pressed) {
-						layer = main_layers_peek(0);
-						main_layers_pressed[row][col] = layer;
+				if (main_arg_is_pressed != main_arg_was_pressed) {
+					if (main_arg_is_pressed) {
+						main_arg_layer = main_layers_peek(0);
+						main_layers_pressed[row][col] = main_arg_layer;
 						main_arg_trans_key_pressed = false;
 					} else {
-						layer = main_layers_pressed[row][col];
+						main_arg_layer = main_layers_pressed[row][col];
 						main_arg_trans_key_pressed = main_kb_was_transparent[row][col];
 					}
 
@@ -104,9 +101,6 @@ int main(void) {
 				}
 			}
 		}
-		#undef layer
-		#undef is_pressed
-		#undef was_pressed
 
 		// send the USB report (even if nothing's changed)
 		usb_keyboard_send();
