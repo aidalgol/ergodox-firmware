@@ -29,9 +29,6 @@
 
 	extern uint8_t main_layers_pressed[KB_ROWS][KB_COLUMNS];
 
-	extern uint8_t main_loop_row;
-	extern uint8_t main_loop_col;
-
 	extern uint8_t main_arg_layer;
 	extern uint8_t main_arg_layer_offset;
 	extern uint8_t main_arg_row;

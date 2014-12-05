@@ -34,9 +34,6 @@ static bool main_kb_was_transparent[KB_ROWS][KB_COLUMNS];
 
 uint8_t main_layers_pressed[KB_ROWS][KB_COLUMNS];
 
-uint8_t main_loop_row;
-uint8_t main_loop_col;
-
 uint8_t main_arg_layer;
 uint8_t main_arg_layer_offset;
 uint8_t main_arg_row;
@@ -80,13 +77,11 @@ int main(void) {
 		//   - see the keyboard layout file ("keyboard/ergodox/layout/*.c") for
 		//     which key is assigned which function (per layer)
 		//   - see "lib/key-functions/public/*.c" for the function definitions
-		#define row          main_loop_row
-		#define col          main_loop_col
 		#define layer        main_arg_layer
 		#define is_pressed   main_arg_is_pressed
 		#define was_pressed  main_arg_was_pressed
-		for (row=0; row<KB_ROWS; row++) {
-			for (col=0; col<KB_COLUMNS; col++) {
+		for (uint8_t row = 0; row < KB_ROWS; row++) {
+			for (uint8_t col = 0; col < KB_COLUMNS; col++) {
 				is_pressed = (*main_kb_is_pressed)[row][col];
 				was_pressed = (*main_kb_was_pressed)[row][col];
 
@@ -109,8 +104,6 @@ int main(void) {
 				}
 			}
 		}
-		#undef row
-		#undef col
 		#undef layer
 		#undef is_pressed
 		#undef was_pressed
