@@ -18,7 +18,7 @@
 
 	#ifndef kb_led_state_power_on
 	#define kb_led_state_power_on() do {				\
-			_kb_led_all_set_percent(MAKEFILE_LED_BRIGHTNESS/10); \
+			_kb_led_all_set_percent(LED_BRIGHTNESS/10); \
 			_kb_led_all_on();				\
 			} while(0)
 	#endif
@@ -26,11 +26,11 @@
 	// note: need to delay for a total of ~1 second
 	#ifndef kb_led_delay_usb_init
 	#define kb_led_delay_usb_init() do {				\
-			_kb_led_1_set_percent(MAKEFILE_LED_BRIGHTNESS);	\
+			_kb_led_1_set_percent(LED_BRIGHTNESS);	\
 			_delay_ms(333);					\
-			_kb_led_2_set_percent(MAKEFILE_LED_BRIGHTNESS);	\
+			_kb_led_2_set_percent(LED_BRIGHTNESS);	\
 			_delay_ms(333);					\
-			_kb_led_3_set_percent(MAKEFILE_LED_BRIGHTNESS);	\
+			_kb_led_3_set_percent(LED_BRIGHTNESS);	\
 			_delay_ms(333);					\
 			} while(0)
 	#endif
@@ -38,7 +38,7 @@
 	#ifndef kb_led_state_ready
 	#define kb_led_state_ready() do {				\
 			_kb_led_all_off();				\
-			_kb_led_all_set_percent(MAKEFILE_LED_BRIGHTNESS); \
+			_kb_led_all_set_percent(LED_BRIGHTNESS); \
 			} while(0)
 	#endif
 

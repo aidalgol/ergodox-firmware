@@ -16,7 +16,7 @@
 
 	// include the appropriate keyboard layout header
 	#include "lib/variable-include.h"
-	#define INCLUDE EXP_STR( ./layout/MAKEFILE_KEYBOARD_LAYOUT.h )
+	#define INCLUDE EXP_STR( ./layout/KEYBOARD_LAYOUT.h )
 	#include INCLUDE
 
 #endif

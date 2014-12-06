@@ -15,8 +15,6 @@ include makefile-options
 FORMAT := ihex
 # Processor type (for teensy 2.0)
 MCU    := atmega32u4
-# See the libraries you're using for what's available
-BOARD  := teensy-2-0
 # Processor speed in Hz; must match initialization in source
 F_CPU  := 16000000
 
@@ -43,16 +41,14 @@ CFLAGS_CPU := -mmcu=$(MCU)
 # Processor frequency; must match initialization in source
 CFLAGS_CPU += -DF_CPU=$(F_CPU)
 
-CFLAGS_MAKEFILE_DEFINES := -DMAKEFILE_BOARD='$(strip $(BOARD))'
-CFLAGS_MAKEFILE_DEFINES += -DMAKEFILE_KEYBOARD='$(strip $(KEYBOARD))'
-CFLAGS_MAKEFILE_DEFINES += -DMAKEFILE_KEYBOARD_LAYOUT='$(strip $(LAYOUT))'
-CFLAGS_MAKEFILE_DEFINES += -DMAKEFILE_DEBOUNCE_TIME='$(strip $(DEBOUNCE_TIME))'
-CFLAGS_MAKEFILE_DEFINES += -DMAKEFILE_LED_BRIGHTNESS='$(strip $(LED_BRIGHTNESS))'
+CFLAGS_DEFINES += -DKEYBOARD_LAYOUT='$(strip $(LAYOUT))'
+CFLAGS_DEFINES += -DDEBOUNCE_TIME='$(strip $(DEBOUNCE_TIME))'
+CFLAGS_DEFINES += -DLED_BRIGHTNESS='$(strip $(LED_BRIGHTNESS))'
 
 # Use -Wno-main because main never returns, so we want main to have a void return value.
 CFLAGS_WARNINGS := -Wall -Wextra -Wstrict-prototypes -Werror -Wno-main
 CFLAGS_OPTIMISATIONS := -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections
-CFLAGS := -std=gnu99 $(CFLAGS_CPU) $(CFLAGS_MAKEFILE_DEFINES) $(CFLAGS_WARNINGS) $(CFLAGS_OPTIMISATIONS)
+CFLAGS := -std=gnu99 $(CFLAGS_CPU) $(CFLAGS_DEFINES) $(CFLAGS_WARNINGS) $(CFLAGS_OPTIMISATIONS)
 
 # generate a link map with a cross reference table.
 LDFLAGS := -Wl,-Map=$(strip $(TARGET)).map,--cref
