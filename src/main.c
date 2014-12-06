@@ -123,15 +123,6 @@ void main(void) {
 
 // ----------------------------------------------------------------------------
 
-// convenience macros (for the helper functions below)
-#define  layer        main_arg_layer
-#define  row          main_arg_row
-#define  col          main_arg_col
-#define  is_pressed   main_arg_is_pressed
-#define  was_pressed  main_arg_was_pressed
-
-// ----------------------------------------------------------------------------
-
 /* ----------------------------------------------------------------------------
  * Layer Functions
  * ----------------------------------------------------------------------------
@@ -163,9 +154,9 @@ uint8_t       layers_ids_in_use[MAX_ACTIVE_LAYERS] = {true};
  */
 void main_exec_key(void) {
 	void (*key_function)(void) =
-		( (is_pressed)
-		  ? kb_layout_press_get(layer, row, col)
-		  : kb_layout_release_get(layer, row, col) );
+		( (main_arg_is_pressed)
+		  ? kb_layout_press_get(main_arg_layer, main_arg_row, main_arg_col)
+		  : kb_layout_release_get(main_arg_layer, main_arg_row, main_arg_col) );
 
 	if (key_function)
 		(*key_function)();
