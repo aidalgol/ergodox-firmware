@@ -31,7 +31,7 @@ SRC += $(wildcard layout/$(LAYOUT)*.c)
 #   macros that have to be overridden in other source files
 SRC += $(wildcard lib/key-functions/private.c)
 SRC += $(wildcard lib/key-functions/public/*.c)
-SRC += $(wildcard lib/twi/teensy-2-0.c)
+SRC += $(wildcard lib/teensy-2-twi.c)
 # SRC += $(wildcard lib/usb/*.c) # TODO
 SRC += $(wildcard lib-other/pjrc/usb_keyboard/usb_keyboard.c)
 

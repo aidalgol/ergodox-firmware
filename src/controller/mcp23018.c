@@ -10,7 +10,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <util/twi.h>
-#include "../lib/twi.h"  // `TWI_FREQ` defined in "teensy-2-0.c"
+#include "../lib/teensy-2-twi.h"
 #include "../options.h"
 #include "../matrix.h"
 #include "mcp23018--functions.h"
