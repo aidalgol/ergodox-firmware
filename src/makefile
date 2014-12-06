@@ -50,7 +50,8 @@ CFLAGS_MAKEFILE_DEFINES += -DMAKEFILE_KEYBOARD_LAYOUT='$(strip $(LAYOUT))'
 CFLAGS_MAKEFILE_DEFINES += -DMAKEFILE_DEBOUNCE_TIME='$(strip $(DEBOUNCE_TIME))'
 CFLAGS_MAKEFILE_DEFINES += -DMAKEFILE_LED_BRIGHTNESS='$(strip $(LED_BRIGHTNESS))'
 
-CFLAGS_WARNINGS := -Wall -Wextra -Wstrict-prototypes -Werror
+# Use -Wno-main because main never returns, so we want main to have a void return value.
+CFLAGS_WARNINGS := -Wall -Wextra -Wstrict-prototypes -Werror -Wno-main
 CFLAGS_OPTIMISATIONS := -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections
 CFLAGS := -std=gnu99 $(CFLAGS_CPU) $(CFLAGS_MAKEFILE_DEFINES) $(CFLAGS_WARNINGS) $(CFLAGS_OPTIMISATIONS)
 

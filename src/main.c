@@ -48,7 +48,7 @@ bool    main_arg_trans_key_pressed;
 /*
  * main()
  */
-int main(void) {
+void main(void) {
 	kb_init();  // does controller initialization too
 
 	kb_led_state_power_on();
@@ -119,8 +119,6 @@ int main(void) {
 		if (keyboard_leds & (1<<4)) { kb_led_kana_on(); }
 		else { kb_led_kana_off(); }
 	}
-
-	return 0;
 }
 
 // ----------------------------------------------------------------------------
