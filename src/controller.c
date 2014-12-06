@@ -9,9 +9,9 @@
 
 #include <stdbool.h>
 #include <stdint.h>
-#include "./matrix.h"
-#include "./controller/mcp23018--functions.h"
-#include "./controller/teensy-2-0--functions.h"
+#include "matrix.h"
+#include "controller/mcp23018--functions.h"
+#include "controller/teensy-2-0--functions.h"
 
 // ----------------------------------------------------------------------------
 

@@ -11,12 +11,12 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <util/delay.h>
-#include "./lib-other/pjrc/usb_keyboard/usb_keyboard.h"
-#include "./lib/key-functions/public.h"
-#include "./keyboard/controller.h"
-#include "./keyboard/layout.h"
-#include "./keyboard/matrix.h"
-#include "./main.h"
+#include "lib-other/pjrc/usb_keyboard/usb_keyboard.h"
+#include "lib/key-functions/public.h"
+#include "controller.h"
+#include "layout.h"
+#include "matrix.h"
+#include "main.h"
 
 // ----------------------------------------------------------------------------
 

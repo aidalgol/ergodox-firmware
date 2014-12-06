@@ -8,7 +8,7 @@
 
 
 #include "../../../main.h"
-#include "../../../keyboard/layout.h"
+#include "../../../layout.h"
 #include "../public.h"
 #include "../private.h"
 

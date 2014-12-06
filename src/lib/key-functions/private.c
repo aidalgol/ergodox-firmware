@@ -11,10 +11,10 @@
 #include <stdint.h>
 #include "../../lib-other/pjrc/usb_keyboard/usb_keyboard.h"
 #include "../../lib/usb/usage-page/keyboard.h"
-#include "../../keyboard/layout.h"
-#include "../../keyboard/matrix.h"
+#include "../../layout.h"
+#include "../../matrix.h"
 #include "../../main.h"
-#include "./public.h"
+#include "public.h"
 
 /*
  * MediaCodeLookupTable is used to translate from enumeration in keyboard.h to

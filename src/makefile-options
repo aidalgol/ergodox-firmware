@@ -7,7 +7,6 @@
 # -----------------------------------------------------------------------------
 
 TARGET   := firmware  # the name we want for our program binary
-KEYBOARD := ergodox   # keyboard model; see "src/keyboard" for what's available
 LAYOUT   := qwerty-kinesis-mod  # keyboard layout
                                 # see "src/keyboard/*/layout" for what's
                                 # available
@@ -18,6 +17,5 @@ DEBOUNCE_TIME  := 5    # in ms; see keyswitch spec for necessary value; 5ms shou
 
 # remove whitespace
 TARGET        := $(strip $(TARGET))
-KEYBOARD      := $(strip $(KEYBOARD))
 LAYOUT        := $(strip $(LAYOUT))
 DEBOUNCE_TIME := $(strip $(DEBOUNCE_TIME))

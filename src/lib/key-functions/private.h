@@ -15,7 +15,7 @@
 
 	#include <stdbool.h>
 	#include <stdint.h>
-	#include "../../keyboard/matrix.h"
+	#include "../../matrix.h"
 
 	// --------------------------------------------------------------------
 

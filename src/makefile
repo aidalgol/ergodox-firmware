@@ -21,12 +21,11 @@ BOARD  := teensy-2-0
 F_CPU  := 16000000
 
 SRC := $(wildcard *.c)
-KEYBOARD := $(strip $(KEYBOARD))
 LAYOUT   := $(strip $(LAYOUT))
 
-SRC += $(wildcard keyboard/$(KEYBOARD)/*.c)
-SRC += $(wildcard keyboard/$(KEYBOARD)/controller/*.c)
-SRC += $(wildcard keyboard/$(KEYBOARD)/layout/$(LAYOUT)*.c)
+SRC += $(wildcard *.c)
+SRC += $(wildcard controller/*.c)
+SRC += $(wildcard layout/$(LAYOUT)*.c)
 # Library files
 # - should be last in the list of files to compile, in case there are default
 #   macros that have to be overridden in other source files

@@ -11,7 +11,7 @@
 #include <stdint.h>
 #include "../../../lib-other/pjrc/usb_keyboard/usb_keyboard.h"
 #include "../../../lib/usb/usage-page/keyboard.h"
-#include "../../../keyboard/layout.h"
+#include "../../../layout.h"
 #include "../../../main.h"
 #include "../public.h"
 #include "../private.h"
