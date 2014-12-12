@@ -12,20 +12,9 @@
 #include "../../../lib-other/pjrc/usb_keyboard/usb_keyboard.h"
 #include "../../../lib/usb/usage-page/keyboard.h"
 #include "../../../layout.h"
-#include "../../../main.h"
+#include "../../../layer.h"
 #include "../public.h"
 #include "../private.h"
-
-// ----------------------------------------------------------------------------
-
-// convenience macros
-#define  LAYER         main_arg_layer
-#define  LAYER_OFFSET  main_arg_layer_offset
-#define  ROW           main_arg_row
-#define  COL           main_arg_col
-#define  IS_PRESSED    main_arg_is_pressed
-#define  WAS_PRESSED   main_arg_was_pressed
-
 
 // ----------------------------------------------------------------------------
 
@@ -39,7 +28,7 @@
  *   keyrelease
  */
 void kbfun_shift_press_release(void) {
-	_kbfun_press_release(IS_PRESSED, KEY_LeftShift);
+	_kbfun_press_release(layer_is_pressed, KEY_LeftShift);
 	kbfun_press_release();
 }
 
@@ -63,15 +52,15 @@ void kbfun_2_keys_capslock_press_release(void) {
 	static bool lshift_pressed;
 	static bool rshift_pressed;
 
-	uint8_t keycode = kb_layout_get(LAYER, ROW, COL);
+	uint8_t keycode = kb_layout_get(current_layer, current_row, current_col);
 
-	if (!IS_PRESSED) keys_pressed--;
+	if (!layer_is_pressed) keys_pressed--;
 
 	// take care of the key that was actually pressed
-	_kbfun_press_release(IS_PRESSED, keycode);
+	_kbfun_press_release(layer_is_pressed, keycode);
 
 	// take care of capslock (only on the press of the 2nd key)
-	if (keys_pressed == 1 && IS_PRESSED) {
+	if (keys_pressed == 1 && layer_is_pressed) {
 		// save the state of left and right shift
 		lshift_pressed = _kbfun_is_pressed(KEY_LeftShift);
 		rshift_pressed = _kbfun_is_pressed(KEY_RightShift);
@@ -92,7 +81,7 @@ void kbfun_2_keys_capslock_press_release(void) {
 			_kbfun_press_release(true, KEY_RightShift);
 	}
 
-	if (IS_PRESSED) keys_pressed++;
+	if (layer_is_pressed) keys_pressed++;
 }
 
 /* ----------------------------------------------------------------------------
@@ -122,9 +111,9 @@ static inline void numpad_toggle_numlock(void) {
  *   key
  */
 void kbfun_layer_push_numpad(void) {
-	uint8_t keycode = kb_layout_get(LAYER, ROW, COL);
-	main_layers_pop_id(numpad_layer_id);
-	numpad_layer_id = main_layers_push(keycode, eStickyNone);
+	uint8_t keycode = kb_layout_get(current_layer, current_row, current_col);
+	layer_pop_id(numpad_layer_id);
+	numpad_layer_id = layer_push(keycode, eStickyNone);
 	numpad_toggle_numlock();
 }
 
@@ -142,7 +131,7 @@ void kbfun_layer_push_numpad(void) {
  *   key
  */
 void kbfun_layer_pop_numpad(void) {
-	main_layers_pop_id(numpad_layer_id);
+	layer_pop_id(numpad_layer_id);
 	numpad_layer_id = 0;
 	numpad_toggle_numlock();
 }
@@ -157,8 +146,8 @@ void kbfun_layer_pop_numpad(void) {
  *
  */
 void kbfun_mediakey_press_release(void) {
-	uint8_t keycode = kb_layout_get(LAYER, ROW, COL);
-	_kbfun_mediakey_press_release(IS_PRESSED, keycode);
+	uint8_t keycode = kb_layout_get(current_layer, current_row, current_col);
+	_kbfun_mediakey_press_release(layer_is_pressed, keycode);
 }
 
 /* ----------------------------------------------------------------------------

@@ -211,7 +211,7 @@ uint8_t teensy_init(void) {
 	#error "Expecting different keyboard dimensions"
 #endif
 
-uint8_t teensy_update_matrix(bool matrix[KB_ROWS][KB_COLUMNS]) {
+uint8_t teensy_update_matrix(kb_matrix matrix) {
 	#if TEENSY__DRIVE_ROWS
 		update_columns_for_row(matrix, 0);
 		update_columns_for_row(matrix, 1);

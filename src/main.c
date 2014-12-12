@@ -15,35 +15,11 @@
 #include "lib/key-functions/public.h"
 #include "controller.h"
 #include "layout.h"
+#include "layer.h"
 #include "matrix.h"
-#include "main.h"
 
-// ----------------------------------------------------------------------------
 
-#define  MAX_ACTIVE_LAYERS  20
-
-// ----------------------------------------------------------------------------
-
-static bool _main_kb_is_pressed[KB_ROWS][KB_COLUMNS];
-bool (*main_kb_is_pressed)[KB_ROWS][KB_COLUMNS] = &_main_kb_is_pressed;
-
-static bool _main_kb_was_pressed[KB_ROWS][KB_COLUMNS];
-bool (*main_kb_was_pressed)[KB_ROWS][KB_COLUMNS] = &_main_kb_was_pressed;
-
-static bool main_kb_was_transparent[KB_ROWS][KB_COLUMNS];
-
-uint8_t main_layers_pressed[KB_ROWS][KB_COLUMNS];
-
-uint8_t main_arg_layer;
-uint8_t main_arg_layer_offset;
-uint8_t main_arg_row;
-uint8_t main_arg_col;
-bool    main_arg_is_pressed;
-bool    main_arg_was_pressed;
-bool    main_arg_any_non_trans_key_pressed;
-bool    main_arg_trans_key_pressed;
-
-// ----------------------------------------------------------------------------
+static kb_matrix kb_was_transparent;
 
 /*
  * main()
@@ -60,12 +36,12 @@ void main(void) {
 	kb_led_state_ready();
 
 	for (;;) {
-		// swap `main_kb_is_pressed` and `main_kb_was_pressed`, then update
-		bool (*temp)[KB_ROWS][KB_COLUMNS] = main_kb_was_pressed;
-		main_kb_was_pressed = main_kb_is_pressed;
-		main_kb_is_pressed = temp;
+		// swap layer_kb_is_pressed and layer_kb_was_pressed, then update
+		kb_matrix *temp = layer_kb_was_pressed;
+		layer_kb_was_pressed = layer_kb_is_pressed;
+		layer_kb_is_pressed = temp;
 
-		kb_update_matrix(*main_kb_is_pressed);
+		kb_update_matrix(*layer_kb_is_pressed);
 
 		// this loop is responsible to
 		// - "execute" keys when they change state
@@ -79,25 +55,25 @@ void main(void) {
 		//   - see "lib/key-functions/public/*.c" for the function definitions
 		for (uint8_t row = 0; row < KB_ROWS; row++) {
 			for (uint8_t col = 0; col < KB_COLUMNS; col++) {
-				main_arg_is_pressed = (*main_kb_is_pressed)[row][col];
-				main_arg_was_pressed = (*main_kb_was_pressed)[row][col];
+				layer_is_pressed = (*layer_kb_is_pressed)[row][col];
+				layer_was_pressed = (*layer_kb_was_pressed)[row][col];
 
-				if (main_arg_is_pressed != main_arg_was_pressed) {
-					if (main_arg_is_pressed) {
-						main_arg_layer = main_layers_peek(0);
-						main_layers_pressed[row][col] = main_arg_layer;
-						main_arg_trans_key_pressed = false;
+				if (layer_is_pressed != layer_was_pressed) {
+					if (layer_is_pressed) {
+						current_layer = layer_peek(0);
+						layer_pressed[row][col] = current_layer;
+						layer_trans_key_pressed = false;
 					} else {
-						main_arg_layer = main_layers_pressed[row][col];
-						main_arg_trans_key_pressed = main_kb_was_transparent[row][col];
+						current_layer = layer_pressed[row][col];
+						layer_trans_key_pressed = kb_was_transparent[row][col];
 					}
 
 					// set remaining vars, and "execute" key
-					main_arg_row          = row;
-					main_arg_col          = col;
-					main_arg_layer_offset = 0;
-					main_exec_key();
-					main_kb_was_transparent[row][col] = main_arg_trans_key_pressed;
+					current_row          = row;
+					current_col          = col;
+					current_layer_offset = 0;
+					layer_exec_key();
+					kb_was_transparent[row][col] = layer_trans_key_pressed;
 				}
 			}
 		}
@@ -120,151 +96,3 @@ void main(void) {
 		else { kb_led_kana_off(); }
 	}
 }
-
-// ----------------------------------------------------------------------------
-
-/* ----------------------------------------------------------------------------
- * Layer Functions
- * ----------------------------------------------------------------------------
- * We keep track of which layer is foremost by placing it on a stack.  Layers
- * may appear in the stack more than once.  The base layer will always be
- * layer-0.  
- *
- * Implemented as a fixed size stack.
- * ------------------------------------------------------------------------- */
-
-// ----------------------------------------------------------------------------
-
-struct layers {
-	uint8_t layer;
-	uint8_t id;
-	uint8_t sticky;
-};
-
-// ----------------------------------------------------------------------------
-
-struct layers layers[MAX_ACTIVE_LAYERS];
-uint8_t       layers_head = 0;
-uint8_t       layers_ids_in_use[MAX_ACTIVE_LAYERS] = {true};
-
-/*
- * Exec key
- * - Execute the keypress or keyrelease function (if it exists) of the key at
- *   the current possition.
- */
-void main_exec_key(void) {
-	void (*key_function)(void) =
-		( (main_arg_is_pressed)
-		  ? kb_layout_press_get(main_arg_layer, main_arg_row, main_arg_col)
-		  : kb_layout_release_get(main_arg_layer, main_arg_row, main_arg_col) );
-
-	if (key_function)
-		(*key_function)();
-
-	// If the current layer is in the sticky once up state and a key defined
-	//  for this layer (a non-transparent key) was pressed, pop the layer
-	if (layers[layers_head].sticky == eStickyOnceUp && main_arg_any_non_trans_key_pressed)
-		main_layers_pop_id(layers_head);
-}
-
-/*
- * peek()
- *
- * Arguments
- * - 'offset': the offset (down the stack) from the head element
- *
- * Returns
- * - success: the layer-number of the requested element (which may be 0)
- * - failure: 0 (default) (out of bounds)
- */
-uint8_t main_layers_peek(uint8_t offset) {
-	if (offset <= layers_head)
-		return layers[layers_head - offset].layer;
-
-	return 0;  // default, or error
-}
-
-uint8_t main_layers_peek_sticky(uint8_t offset) {
-	if (offset <= layers_head)
-		return layers[layers_head - offset].sticky;
-
-	return 0;  // default, or error
-}
-
-/*
- * push()
- *
- * Arguments
- * - 'layer': the layer-number to push to the top of the stack
- *
- * Returns
- * - success: the id assigned to the newly added element
- * - failure: 0 (the stack was already full)
- */
-uint8_t main_layers_push(uint8_t layer, uint8_t sticky) {
-	// look for an available id
-	for (uint8_t id=1; id<MAX_ACTIVE_LAYERS; id++) {
-		// if one is found
-		if (layers_ids_in_use[id] == false) {
-			layers_ids_in_use[id] = true;
-			layers_head++;
-			layers[layers_head].layer = layer;
-			layers[layers_head].id = id;
-			layers[layers_head].sticky = sticky;
-			return id;
-		}
-	}
-
-	return 0;  // default, or error
-}
-
-/*
- * pop_id()
- *
- * Arguments
- * - 'id': the id of the element to pop from the stack
- */
-void main_layers_pop_id(uint8_t id) {
-	// look for the element with the id we want to pop
-	for (uint8_t element=1; element<=layers_head; element++)
-		// if we find it
-		if (layers[element].id == id) {
-			// move all layers above it down one
-			for (; element<layers_head; element++) {
-				layers[element].layer = layers[element+1].layer;
-				layers[element].id = layers[element+1].id;
-			}
-			// reinitialize the topmost (now unused) slot
-			layers[layers_head].layer = 0;
-			layers[layers_head].id = 0;
-			// record keeping
-			layers_ids_in_use[id] = false;
-			layers_head--;
-		}
-}
-
-/*
- * get_offset_id()
- *
- * Arguments
- * - 'id': the id of the element you want the offset of
- *
- * Returns
- * - success: the offset (down the stack from the head element) of the element
- *   with the given id
- * - failure: 0 (default) (id unassigned)
- */
-uint8_t main_layers_get_offset_id(uint8_t id) {
-	// look for the element with the id we want to get the offset of
-	for (uint8_t element=1; element<=layers_head; element++)
-		// if we find it
-		if (layers[element].id == id)
-			return (layers_head - element);
-
-	return 0;  // default, or error
-
-}
-
-/* ----------------------------------------------------------------------------
- * ------------------------------------------------------------------------- */
-

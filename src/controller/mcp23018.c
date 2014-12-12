@@ -109,7 +109,7 @@ out:
 #if KB_ROWS != 6 || KB_COLUMNS != 14
 	#error "Expecting different keyboard dimensions"
 #endif
-uint8_t mcp23018_update_matrix(bool matrix[KB_ROWS][KB_COLUMNS]) {
+uint8_t mcp23018_update_matrix(kb_matrix matrix) {
 	uint8_t ret, data;
 
 	// initialize things, just to make sure

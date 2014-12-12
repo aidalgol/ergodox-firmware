@@ -21,7 +21,7 @@
 	// --------------------------------------------------------------------
 
 	uint8_t mcp23018_init(void);
-	uint8_t mcp23018_update_matrix( bool matrix[KB_ROWS][KB_COLUMNS] );
+	uint8_t mcp23018_update_matrix(kb_matrix matrix);
 
 #endif
 

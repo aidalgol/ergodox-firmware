@@ -7,7 +7,7 @@
  * ------------------------------------------------------------------------- */
 
 
-#include "../../../main.h"
+#include "../../../layer.h"
 #include "../../../layout.h"
 #include "../public.h"
 #include "../private.h"
@@ -26,8 +26,8 @@
  *   Generate a normal keypress or keyrelease
  */
 void kbfun_press_release(void) {
-	if (!main_arg_trans_key_pressed)
-		main_arg_any_non_trans_key_pressed = true;
+	if (!layer_trans_key_pressed)
+		layer_any_non_trans_key_pressed = true;
 	kbfun_press_release_preserve_sticky();
 }
 
@@ -47,8 +47,8 @@ void kbfun_press_release(void) {
  *    defining the key to be transparent for the layer.
  */
 void kbfun_press_release_preserve_sticky(void) {
-	uint8_t keycode = kb_layout_get(main_arg_layer, main_arg_row, main_arg_col);
-	_kbfun_press_release(main_arg_is_pressed, keycode);
+	uint8_t keycode = kb_layout_get(current_layer, current_row, current_col);
+	_kbfun_press_release(layer_is_pressed, keycode);
 }
 
 /*
@@ -59,7 +59,7 @@ void kbfun_press_release_preserve_sticky(void) {
  *   Toggle the key pressed or unpressed
  */
 void kbfun_toggle(void) {
-	uint8_t keycode = kb_layout_get(main_arg_layer, main_arg_row, main_arg_col);
+	uint8_t keycode = kb_layout_get(current_layer, current_row, current_col);
 
 	if (_kbfun_is_pressed(keycode))
 		_kbfun_press_release(false, keycode);
@@ -76,11 +76,11 @@ void kbfun_toggle(void) {
  *   active
  */
 void kbfun_transparent(void) {
-	main_arg_trans_key_pressed = true;
-	main_arg_layer_offset++;
-	main_arg_layer = main_layers_peek(main_arg_layer_offset);
-	main_layers_pressed[main_arg_row][main_arg_col] = main_arg_layer;
-	main_exec_key();
+	layer_trans_key_pressed = true;
+	current_layer_offset++;
+	current_layer = layer_peek(current_layer_offset);
+	layer_pressed[current_row][current_col] = current_layer;
+	layer_exec_key();
 }
 
 
@@ -93,52 +93,52 @@ void kbfun_transparent(void) {
 //  layer 0 even if we will never have a push or pop function for it
 static uint8_t layer_ids[1 + MAX_LAYER_PUSH_POP_FUNCTIONS];
 
-static void layer_push(uint8_t local_id) {
-	uint8_t keycode = kb_layout_get(main_arg_layer, main_arg_row, main_arg_col);
-	main_layers_pop_id(layer_ids[local_id]);
+static void basic_layer_push(uint8_t local_id) {
+	uint8_t keycode = kb_layout_get(current_layer, current_row, current_col);
+	layer_pop_id(layer_ids[local_id]);
 	// Only the topmost layer on the stack should be in sticky once state, pop
 	//  the top layer if it is in sticky once state
-	uint8_t topSticky = main_layers_peek_sticky(0);
+	uint8_t topSticky = layer_peek_sticky(0);
 	if (topSticky == eStickyOnceDown || topSticky == eStickyOnceUp) {
-		main_layers_pop_id(main_layers_peek(0));
+		layer_pop_id(layer_peek(0));
 	}
-	layer_ids[local_id] = main_layers_push(keycode, eStickyNone);
+	layer_ids[local_id] = layer_push(keycode, eStickyNone);
 }
 
 static void layer_sticky(uint8_t local_id) {
-	uint8_t keycode = kb_layout_get(main_arg_layer, main_arg_row, main_arg_col);
-	if (main_arg_is_pressed) {
-		uint8_t topLayer = main_layers_peek(0);
-		uint8_t topSticky = main_layers_peek_sticky(0);
-		main_layers_pop_id(layer_ids[local_id]);
+	uint8_t keycode = kb_layout_get(current_layer, current_row, current_col);
+	if (layer_is_pressed) {
+		uint8_t topLayer = layer_peek(0);
+		uint8_t topSticky = layer_peek_sticky(0);
+		layer_pop_id(layer_ids[local_id]);
 		if (topLayer == local_id) {
 			if (topSticky == eStickyOnceUp)
-				layer_ids[local_id] = main_layers_push(keycode, eStickyLock);
+				layer_ids[local_id] = layer_push(keycode, eStickyLock);
 		}
 		else
 		{
 			// only the topmost layer on the stack should be in sticky once state
 			if (topSticky == eStickyOnceDown || topSticky == eStickyOnceUp) {
-				main_layers_pop_id(layer_ids[topLayer]);
+				layer_pop_id(layer_ids[topLayer]);
 			}
-			layer_ids[local_id] = main_layers_push(keycode, eStickyOnceDown);
+			layer_ids[local_id] = layer_push(keycode, eStickyOnceDown);
 			// this should be the only place we care about this flag being cleared
-			main_arg_any_non_trans_key_pressed = false;
+			layer_any_non_trans_key_pressed = false;
 		}
 	}
 	else
 	{
-		uint8_t topLayer = main_layers_peek(0);
-		uint8_t topSticky = main_layers_peek_sticky(0);
+		uint8_t topLayer = layer_peek(0);
+		uint8_t topSticky = layer_peek_sticky(0);
 		if (topLayer == local_id) {
 			if (topSticky == eStickyOnceDown) {
 				// When releasing this sticky key, pop the layer always
-				main_layers_pop_id(layer_ids[local_id]);
-				if (!main_arg_any_non_trans_key_pressed) {
+				layer_pop_id(layer_ids[local_id]);
+				if (!layer_any_non_trans_key_pressed) {
 					// If no key defined for this layer (a non-transparent key)
 					//  was pressed, push the layer again, but in the
 					//  StickyOnceUp state
-					layer_ids[local_id] = main_layers_push(keycode, eStickyOnceUp);
+					layer_ids[local_id] = layer_push(keycode, eStickyOnceUp);
 				}
 			}
 		}
@@ -146,7 +146,7 @@ static void layer_sticky(uint8_t local_id) {
 }
 
 static void layer_pop(uint8_t local_id) {
-	main_layers_pop_id(layer_ids[local_id]);
+	layer_pop_id(layer_ids[local_id]);
 	layer_ids[local_id] = 0;
 }
 
@@ -159,7 +159,7 @@ static void layer_pop(uint8_t local_id) {
  *   the top of the stack, and record the id of that layer element
  */
 void kbfun_layer_push_1(void) {
-	layer_push(1);
+	basic_layer_push(1);
 }
 
 /*
@@ -223,7 +223,7 @@ void kbfun_layer_pop_1(void) {
  *   the top of the stack, and record the id of that layer element
  */
 void kbfun_layer_push_2(void) {
-	layer_push(2);
+	basic_layer_push(2);
 }
 
 /*
@@ -259,7 +259,7 @@ void kbfun_layer_pop_2(void) {
  *   the top of the stack, and record the id of that layer element
  */
 void kbfun_layer_push_3(void) {
-	layer_push(3);
+	basic_layer_push(3);
 }
 
 /*
@@ -295,7 +295,7 @@ void kbfun_layer_pop_3(void) {
  *   the top of the stack, and record the id of that layer element
  */
 void kbfun_layer_push_4(void) {
-	layer_push(4);
+	basic_layer_push(4);
 }
 
 /*
@@ -331,7 +331,7 @@ void kbfun_layer_pop_4(void) {
  *   the top of the stack, and record the id of that layer element
  */
 void kbfun_layer_push_5(void) {
-	layer_push(5);
+	basic_layer_push(5);
 }
 
 /*
@@ -367,7 +367,7 @@ void kbfun_layer_pop_5(void) {
  *   the top of the stack, and record the id of that layer element
  */
 void kbfun_layer_push_6(void) {
-	layer_push(6);
+	basic_layer_push(6);
 }
 
 /*
@@ -403,7 +403,7 @@ void kbfun_layer_pop_6(void) {
  *   the top of the stack, and record the id of that layer element
  */
 void kbfun_layer_push_7(void) {
-	layer_push(7);
+	basic_layer_push(7);
 }
 
 /*
@@ -439,7 +439,7 @@ void kbfun_layer_pop_7(void) {
  *   the top of the stack, and record the id of that layer element
  */
 void kbfun_layer_push_8(void) {
-	layer_push(8);
+	basic_layer_push(8);
 }
 
 /*
@@ -475,7 +475,7 @@ void kbfun_layer_pop_8(void) {
  *   the top of the stack, and record the id of that layer element
  */
 void kbfun_layer_push_9(void) {
-	layer_push(9);
+	basic_layer_push(9);
 }
 
 /*
@@ -511,7 +511,7 @@ void kbfun_layer_pop_9(void) {
  *   the top of the stack, and record the id of that layer element
  */
 void kbfun_layer_push_10(void) {
-	layer_push(10);
+	basic_layer_push(10);
 }
 
 /*

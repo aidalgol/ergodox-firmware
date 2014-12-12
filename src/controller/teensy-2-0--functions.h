@@ -17,7 +17,7 @@
 	// --------------------------------------------------------------------
 
 	uint8_t teensy_init(void);
-	uint8_t teensy_update_matrix( bool matrix[KB_ROWS][KB_COLUMNS] );
+	uint8_t teensy_update_matrix(kb_matrix matrix);
 
 #endif
 

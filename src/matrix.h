@@ -15,6 +15,8 @@
 	#define KB_ROWS      6  // must match real life
 	#define KB_COLUMNS  14  // must match real life
 
+  typedef bool kb_matrix[KB_ROWS][KB_COLUMNS];
+
 	// --------------------------------------------------------------------
 
 	/* mapping from spatial position to matrix position

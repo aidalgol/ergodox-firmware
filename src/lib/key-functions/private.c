@@ -13,7 +13,7 @@
 #include "../../lib/usb/usage-page/keyboard.h"
 #include "../../layout.h"
 #include "../../matrix.h"
-#include "../../main.h"
+#include "../../layer.h"
 #include "public.h"
 
 /*
