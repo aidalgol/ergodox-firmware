@@ -10,14 +10,11 @@
 
 
 #ifndef KEYBOARD__ERGODOX__LAYOUT_h
-	#define KEYBOARD__ERGODOX__LAYOUT_h
+#define KEYBOARD__ERGODOX__LAYOUT_h
 
-	// --------------------------------------------------------------------
-
-	// include the appropriate keyboard layout header
-	#include "lib/variable-include.h"
-	#define INCLUDE EXP_STR( ./layout/KEYBOARD_LAYOUT.h )
-	#include INCLUDE
+// include the appropriate keyboard layout header
+#include "lib/variable-include.h"
+#define INCLUDE EXP_STR( ./layout/KEYBOARD_LAYOUT.h )
+#include INCLUDE
 
 #endif
-

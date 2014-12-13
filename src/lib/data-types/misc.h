@@ -6,11 +6,9 @@
  * Project located at <https://github.com/benblazak/ergodox-firmware>
  * ------------------------------------------------------------------------- */
 
-
 #ifndef LIB__DATA_TYPES_h
-	#define LIB__DATA_TYPES_h
+#define LIB__DATA_TYPES_h
 
-	typedef  void (*void_funptr_t)(void);
+typedef  void (*void_funptr_t)(void);
 
 #endif
-

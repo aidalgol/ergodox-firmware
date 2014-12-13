@@ -6,7 +6,6 @@
  * Project located at <https://github.com/benblazak/ergodox-firmware>
  * ------------------------------------------------------------------------- */
 
-
 #define TWI_FREQ 400000
 
 #include <stdbool.h>
@@ -19,14 +18,11 @@
 #include "teensy-2-0--functions.h"
 #include "teensy-2-0--led.h"
 
-// ----------------------------------------------------------------------------
-
 // check options
 #if  (TEENSY__DRIVE_ROWS && TEENSY__DRIVE_COLUMNS)	\
  || !(TEENSY__DRIVE_ROWS || TEENSY__DRIVE_COLUMNS)
 	#error "See 'Pin drive direction' in 'options.h'"
 #endif
-// ----------------------------------------------------------------------------
 
 // processor frequency (from <http://www.pjrc.com/teensy/prescaler.html>)
 #define  CPU_PRESCALE(n)  (CLKPR = 0x80, CLKPR = (n))
@@ -157,12 +153,12 @@
 		teensypin_write(DDR, CLEAR, ROW_##row);			\
 	} while(0)
 
-// ----------------------------------------------------------------------------
 
 /* returns
  * - success: 0
  */
-uint8_t teensy_init(void) {
+uint8_t teensy_init(void)
+{
 	// CPU speed : should match F_CPU in makefile
 	#if F_CPU != 16000000
 		#error "Expecting different CPU frequency"
@@ -211,7 +207,8 @@ uint8_t teensy_init(void) {
 	#error "Expecting different keyboard dimensions"
 #endif
 
-uint8_t teensy_update_matrix(kb_matrix matrix) {
+uint8_t teensy_update_matrix(kb_matrix matrix)
+{
 	#if TEENSY__DRIVE_ROWS
 		update_columns_for_row(matrix, 0);
 		update_columns_for_row(matrix, 1);

@@ -8,16 +8,14 @@
 
 
 #ifndef KEYBOARD__ERGODOX__CONTROLLER__TEENSY_2_0__FUNCTIONS_h
-	#define KEYBOARD__ERGODOX__CONTROLLER__TEENSY_2_0__FUNCTIONS_h
+#define KEYBOARD__ERGODOX__CONTROLLER__TEENSY_2_0__FUNCTIONS_h
 
-	#include <stdbool.h>
-	#include <stdint.h>
-	#include "../matrix.h"
+#include <stdbool.h>
+#include <stdint.h>
+#include "../matrix.h"
 
-	// --------------------------------------------------------------------
-
-	uint8_t teensy_init(void);
-	uint8_t teensy_update_matrix(kb_matrix matrix);
+uint8_t teensy_init(void);
+uint8_t teensy_update_matrix(kb_matrix matrix);
 
 #endif
 

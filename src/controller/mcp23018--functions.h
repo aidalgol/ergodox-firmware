@@ -8,20 +8,16 @@
 
 
 #ifndef KEYBOARD__ERGODOX__CONTROLLER__MCP23018__FUNCTIONS_h
-	#define KEYBOARD__ERGODOX__CONTROLLER__MCP23018__FUNCTIONS_h
+#define KEYBOARD__ERGODOX__CONTROLLER__MCP23018__FUNCTIONS_h
 
-	#include <stdbool.h>
-	#include <stdint.h>
-	#include "../matrix.h"
+#include <stdbool.h>
+#include <stdint.h>
+#include "../matrix.h"
 
-	// --------------------------------------------------------------------
+#define MCP23018_TWI_ADDRESS 0b0100000
 
-	#define MCP23018_TWI_ADDRESS 0b0100000
-
-	// --------------------------------------------------------------------
-
-	uint8_t mcp23018_init(void);
-	uint8_t mcp23018_update_matrix(kb_matrix matrix);
+uint8_t mcp23018_init(void);
+uint8_t mcp23018_update_matrix(kb_matrix matrix);
 
 #endif
 

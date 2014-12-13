@@ -8,12 +8,8 @@
  * Project located at <https://github.com/benblazak/ergodox-firmware>
  * ------------------------------------------------------------------------- */
 
-
 #ifndef USB_COMMON_h
-	#define USB_COMMON_h
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
+#define USB_COMMON_h
 
 // - spec table 9-4 (Standard Request Codes)
 #define USB_GET_STATUS         0
@@ -45,8 +41,4 @@
 #define USB_ENDPOINT_HALT        0  // recipient: endpoint
 #define USB_TEST_MODE            2  // recipient: device
 
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
 #endif
-
