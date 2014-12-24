@@ -10,7 +10,6 @@
 #include <stdint.h>
 #include "../../lib-other/pjrc/usb_keyboard/usb_keyboard.h"
 #include "../../lib/usb/usage-page/keyboard.h"
-#include "../../layout.h"
 #include "../../matrix.h"
 #include "../../layer.h"
 #include "public.h"

@@ -1,5 +1,5 @@
 /* ----------------------------------------------------------------------------
- * ergoDOX : matrix specific exports
+ * ergoDOX : key matrix
  * ----------------------------------------------------------------------------
  * Copyright (c) 2012 Ben Blazak <benblazak.dev@gmail.com>
  * Released under The MIT License (MIT) (see "license.md")
@@ -10,8 +10,15 @@
 #ifndef KEYBOARD__ERGODOX__MATRIX_h
 #define KEYBOARD__ERGODOX__MATRIX_h
 
-#define KB_ROWS      6  // must match real life
-#define KB_COLUMNS  14  // must match real life
+// ROWS and COLUMNS must match that of the PCB
+#define KB_ROWS      6
+#define KB_COLUMNS  14
+#define KB_LAYERS   10
+
+#include <stdint.h>
+#include <avr/pgmspace.h>
+#include "lib/data-types/misc.h"
+#include "lib/key-functions/public.h"
 
 typedef bool kb_matrix[KB_ROWS][KB_COLUMNS];
 
@@ -70,5 +77,45 @@ typedef bool kb_matrix[KB_ROWS][KB_COLUMNS];
  {k30,k31,k32,k33,k34,k35,  0,   0,k38,k39,k3A,k3B,k3C,k3D},\
  {k40,k41,k42,k43,k44,k45,k46, k47,k48,k49,k4A,k4B,k4C,k4D},\
  {k50,k51,k52,k53,k54,k55,k56, k57,k58,k59,k5A,k5B,k5C,k5D}}
+
+
+/* matrix 'get' macros, and `extern` matrix declarations
+ *
+ * These are written for when the matrices are stored solely in Flash.
+ * Layouts may redefine them if they wish and use Flash, RAM, EEPROM,
+ * or any combination of the three, as long as they maintain the same
+ * interface.
+ *
+ * - If the macro is overridden, the matrix declaration must be too,
+ *   and vice versa.
+ *
+ * - 'set' functions are optional, and should be defined in the layout
+ *   specific '.h'.  They'll require the use of the EEPROM, possibly in
+ *   clever conjunction with one of the other two memories (since the
+ *   EEPROM is small).  Custom key functions will also need to be
+ *   written.
+ *
+ * - To override these macros with real functions, set the macro equal
+ *   to itself (e.g. `#define kb_layout_get kb_layout_get`) and provide
+ *   function prototypes, in the layout specific '.h'
+ */
+
+// layout
+extern const uint8_t PROGMEM _kb_layout[KB_LAYERS][KB_ROWS][KB_COLUMNS];
+
+#define kb_layout_get(layer,row,column) \
+  ((uint8_t) pgm_read_byte(&(_kb_layout[layer][row][column])))
+
+// layout_press
+extern const void_funptr_t PROGMEM _kb_layout_press[KB_LAYERS][KB_ROWS][KB_COLUMNS];
+
+#define kb_layout_press_get(layer,row,column) \
+			((void_funptr_t) pgm_read_word(&(_kb_layout_press[layer][row][column])))
+
+// layout_release
+extern const void_funptr_t PROGMEM _kb_layout_release[KB_LAYERS][KB_ROWS][KB_COLUMNS];
+
+#define kb_layout_release_get(layer,row,column) \
+  ((void_funptr_t) pgm_read_word(&(_kb_layout_release[layer][row][column])))
 
 #endif

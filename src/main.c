@@ -13,9 +13,9 @@
 #include "lib-other/pjrc/usb_keyboard/usb_keyboard.h"
 #include "lib/key-functions/public.h"
 #include "controller.h"
-#include "layout.h"
 #include "layer.h"
 #include "matrix.h"
+#include "led.h"
 
 static kb_matrix kb_was_transparent;
 
@@ -81,17 +81,5 @@ void main(void)
     usb_keyboard_send();
     usb_extra_consumer_send();
     _delay_ms(DEBOUNCE_TIME);
-
-    // update LEDs
-    if (keyboard_leds & (1<<0)) { kb_led_num_on(); }
-    else { kb_led_num_off(); }
-    if (keyboard_leds & (1<<1)) { kb_led_caps_on(); }
-    else { kb_led_caps_off(); }
-    if (keyboard_leds & (1<<2)) { kb_led_scroll_on(); }
-    else { kb_led_scroll_off(); }
-    if (keyboard_leds & (1<<3)) { kb_led_compose_on(); }
-    else { kb_led_compose_off(); }
-    if (keyboard_leds & (1<<4)) { kb_led_kana_on(); }
-    else { kb_led_kana_off(); }
   }
 }

@@ -14,7 +14,6 @@
 #include "../lib/usb/usage-page/keyboard--short-names.h"
 #include "../lib/key-functions/public.h"
 #include "../matrix.h"
-#include "../layout.h"
 
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
