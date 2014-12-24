@@ -96,7 +96,7 @@ $(TARGET).elf: $(OBJ)
 
 %.o: %.c
 	@echo Compiling $@
-	@$(CC) -c $(CFLAGS) $(GEN_DEP_FLAGS) $< -o $@
+	$(CC) -c $(CFLAGS) $(GEN_DEP_FLAGS) $< -o $@
 
 
 -include $(OBJ:%=%.dep)
