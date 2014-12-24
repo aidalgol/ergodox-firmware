@@ -6,7 +6,6 @@
  * Project located at <https://github.com/benblazak/ergodox-firmware>
  * ------------------------------------------------------------------------- */
 
-
 #include <stdint.h>
 #include <stddef.h>
 #include <avr/pgmspace.h>
@@ -14,9 +13,6 @@
 #include "../lib/usb/usage-page/keyboard--short-names.h"
 #include "../lib/key-functions/public.h"
 #include "../matrix.h"
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
 
 const uint8_t PROGMEM _kb_layout[KB_LAYERS][KB_ROWS][KB_COLUMNS] = {
 
@@ -199,7 +195,7 @@ const void_funptr_t PROGMEM _kb_layout_press[KB_LAYERS][KB_ROWS][KB_COLUMNS] = {
    NULL, NULL, NULL, NULL, NULL, NULL, NULL,
    NULL, NULL, NULL, NULL, NULL, NULL,
    NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-   NULL, NULL, NULL, NULL, NULL, 
+   NULL, NULL, NULL, NULL, NULL,
                                  NULL, NULL,
                                        NULL,
                            NULL, NULL, NULL,
@@ -208,7 +204,7 @@ const void_funptr_t PROGMEM _kb_layout_press[KB_LAYERS][KB_ROWS][KB_COLUMNS] = {
    NULL, NULL, NULL, NULL, NULL, NULL, NULL,
          NULL, NULL, NULL, NULL, NULL, NULL,
    NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-   NULL, NULL, NULL, NULL, NULL, 
+   NULL, NULL, NULL, NULL, NULL,
    NULL, NULL,
          NULL,
    NULL, NULL, NULL ),
@@ -288,7 +284,7 @@ const void_funptr_t PROGMEM _kb_layout_release[KB_LAYERS][KB_ROWS][KB_COLUMNS] =
  NULL, NULL, NULL, NULL, NULL, NULL, NULL,
  NULL, NULL, NULL, NULL, NULL, NULL,
  NULL, NULL, NULL, NULL, NULL, NULL, NULL,
- NULL, NULL, NULL, NULL, NULL, 
+ NULL, NULL, NULL, NULL, NULL,
                                NULL, NULL,
                                      NULL,
                          NULL, NULL, NULL,
@@ -297,7 +293,7 @@ const void_funptr_t PROGMEM _kb_layout_release[KB_LAYERS][KB_ROWS][KB_COLUMNS] =
  NULL, NULL, NULL, NULL, NULL, NULL, NULL,
        NULL, NULL, NULL, NULL, NULL, NULL,
  NULL, NULL, NULL, NULL, NULL, NULL, NULL,
- NULL, NULL, NULL, NULL, NULL, 
+ NULL, NULL, NULL, NULL, NULL,
  NULL, NULL,
  NULL,
  NULL, NULL, NULL ),
@@ -338,4 +334,3 @@ const void_funptr_t PROGMEM _kb_layout_release[KB_LAYERS][KB_ROWS][KB_COLUMNS] =
  lpush6,  lpop6,slponum,   NULL,   NULL,   NULL,   NULL,   NULL,
  lpush7,  lpop7,   NULL,   NULL )
 };
-
