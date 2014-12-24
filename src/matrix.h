@@ -19,6 +19,7 @@
 #include <avr/pgmspace.h>
 #include "lib/data-types/misc.h"
 #include "lib/key-functions/public.h"
+#include "layout.h"
 
 typedef bool kb_matrix[KB_ROWS][KB_COLUMNS];
 
@@ -101,20 +102,14 @@ typedef bool kb_matrix[KB_ROWS][KB_COLUMNS];
  */
 
 // layout
-extern const uint8_t PROGMEM _kb_layout[KB_LAYERS][KB_ROWS][KB_COLUMNS];
-
 #define kb_layout_get(layer,row,column) \
   ((uint8_t) pgm_read_byte(&(_kb_layout[layer][row][column])))
 
 // layout_press
-extern const void_funptr_t PROGMEM _kb_layout_press[KB_LAYERS][KB_ROWS][KB_COLUMNS];
-
 #define kb_layout_press_get(layer,row,column) \
 			((void_funptr_t) pgm_read_word(&(_kb_layout_press[layer][row][column])))
 
 // layout_release
-extern const void_funptr_t PROGMEM _kb_layout_release[KB_LAYERS][KB_ROWS][KB_COLUMNS];
-
 #define kb_layout_release_get(layer,row,column) \
   ((void_funptr_t) pgm_read_word(&(_kb_layout_release[layer][row][column])))
 
