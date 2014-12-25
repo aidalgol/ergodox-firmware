@@ -6,13 +6,7 @@
  * Project located at <https://github.com/benblazak/ergodox-firmware>
  * ------------------------------------------------------------------------- */
 
-#include <stdint.h>
-#include <stddef.h>
-#include <avr/pgmspace.h>
-#include "../lib/data-types/misc.h"
-#include "../lib/usb/usage-page/keyboard--short-names.h"
-#include "../lib/key-functions.h"
-#include "../matrix.h"
+#include "../layout.h"
 
 /** key codes **/
 const uint8_t PROGMEM _kb_layout[KB_LAYERS][KB_ROWS][KB_COLUMNS] = {

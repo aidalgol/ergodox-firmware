@@ -1,12 +1,18 @@
 /* ----------------------------------------------------------------------------
- * ergoDOX : layout matrices
+ * ergoDOX : layout matrices and layout includes
  * ----------------------------------------------------------------------------
- * Declarations for the layout const's defined in the layer module.
+ * Declarations for the layout const's defined in the layer module, and
+ * #include's required by the layout.
  * ----------------------------------------------------------------------------
  * Copyright (c) 2012 Ben Blazak <benblazak.dev@gmail.com>
  * Released under The MIT License (MIT) (see "license.md")
  * Project located at <https://github.com/benblazak/ergodox-firmware>
  * ------------------------------------------------------------------------- */
+
+#include <stddef.h>
+#include "lib/usb/usage-page/keyboard--short-names.h"
+#include "lib/key-functions.h"
+#include "matrix.h"
 
 #ifndef KEYBOARD__ERGODOX__LAYOUT_h
 #define KEYBOARD__ERGODOX__LAYOUT_h
