@@ -8,13 +8,11 @@
 
 #define TWI_FREQ 400000
 
-#include <stdbool.h>
 #include <stdint.h>
 #include <avr/io.h>
 #include <util/delay.h>
 #include "../lib/teensy-2-twi.h"
 #include "../options.h"
-#include "../matrix.h"
 #include "teensy-2-0--functions.h"
 #include "teensy-2-0--led.h"
 

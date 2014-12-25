@@ -6,7 +6,6 @@
  * Project located at <https://github.com/benblazak/ergodox-firmware>
  * ------------------------------------------------------------------------- */
 
-
 #ifndef KEYBOARD__ERGODOX__MATRIX_h
 #define KEYBOARD__ERGODOX__MATRIX_h
 
@@ -15,10 +14,10 @@
 #define KB_COLUMNS  14
 #define KB_LAYERS   10
 
+#include <stdbool.h>
 #include <stdint.h>
 #include <avr/pgmspace.h>
 #include "lib/data-types/misc.h"
-#include "lib/key-functions.h"
 #include "layout.h"
 
 typedef bool kb_matrix[KB_ROWS][KB_COLUMNS];

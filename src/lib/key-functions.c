@@ -10,11 +10,12 @@
  * Project located at <https://github.com/benblazak/ergodox-firmware>
  * ------------------------------------------------------------------------- */
 
+#include <stdbool.h>
+#include <stdint.h>
 #include <avr/interrupt.h>
 #include <util/delay.h>
 #include "../layer.h"
 #include "../lib-other/pjrc/usb_keyboard/usb_keyboard.h"
-#include "../lib/usb/usage-page/keyboard.h"
 
 #define MAX_LAYER_PUSH_POP_FUNCTIONS 10
 

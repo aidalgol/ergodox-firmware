@@ -10,15 +10,10 @@
  * Project located at <https://github.com/benblazak/ergodox-firmware>
  * ------------------------------------------------------------------------- */
 
-
 #ifndef USB_USAGE_PAGE_KEYBOARD_SHORT_NAMES_h
-	#define USB_USAGE_PAGE_KEYBOARD_SHORT_NAMES_h
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
+#define USB_USAGE_PAGE_KEYBOARD_SHORT_NAMES_h
 
-
-#include "./keyboard.h"
-
+#include "keyboard.h"
 
 // ----------------------------------------------------------------------------
 // protocol
@@ -304,8 +299,4 @@
 #define _memMul_kp          KEYPAD_MemoryMultiply
 #define _memDiv_kp          KEYPAD_MemoryDivide
 
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
 #endif
-

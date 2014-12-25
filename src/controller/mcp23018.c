@@ -6,12 +6,10 @@
  * Project located at <https://github.com/benblazak/ergodox-firmware>
  * ------------------------------------------------------------------------- */
 
-#include <stdbool.h>
 #include <stdint.h>
 #include <util/twi.h>
 #include "../lib/teensy-2-twi.h"
 #include "../options.h"
-#include "../matrix.h"
 #include "mcp23018--functions.h"
 
 // check options

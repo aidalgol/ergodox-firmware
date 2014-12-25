@@ -9,7 +9,6 @@
 #ifndef LIB__KEY_FUNCTIONS__h
 #define LIB__KEY_FUNCTIONS__h
 
-#include <stdbool.h>
 #include <stdint.h>
 
 // basic

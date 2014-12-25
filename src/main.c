@@ -7,15 +7,14 @@
  * Project located at <https://github.com/benblazak/ergodox-firmware>
  * ------------------------------------------------------------------------- */
 
-#include <stdbool.h>
 #include <stdint.h>
 #include <util/delay.h>
 #include "lib-other/pjrc/usb_keyboard/usb_keyboard.h"
-#include "lib/key-functions.h"
 #include "controller.h"
 #include "layer.h"
 #include "matrix.h"
 #include "led.h"
+#include "controller/teensy-2-0--led.h"
 
 static kb_matrix kb_was_transparent;
 

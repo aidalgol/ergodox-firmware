@@ -6,7 +6,6 @@
  * Project located at <https://github.com/benblazak/ergodox-firmware>
  * ------------------------------------------------------------------------- */
 
-
 #ifndef KEYBOARD__ERGODOX__OPTIONS_h
 #define KEYBOARD__ERGODOX__OPTIONS_h
 

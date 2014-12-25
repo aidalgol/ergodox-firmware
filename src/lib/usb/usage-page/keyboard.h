@@ -20,12 +20,8 @@
  * Project located at <https://github.com/benblazak/ergodox-firmware>
  * ------------------------------------------------------------------------- */
 
-
 #ifndef USB_USAGE_PAGE_KEYBOARD_h
-	#define USB_USAGE_PAGE_KEYBOARD_h
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
-
+#define USB_USAGE_PAGE_KEYBOARD_h
 
 //      Name                        ID    // PC Mac Unix  Boot Keyboard Req.
 //      --------------------------- ----     -- --- ----  ---------------------
@@ -268,8 +264,8 @@
 
 //     (Reserved)           0xE8..0xFFFF  // -  -   -     -
 
-// Media key codes are not real scan codes, they must be translated to a 16
-//  bit number by the consumer key key function
+/* Media key codes are not real scan codes, they must be translated to a 16 bit
+ * number by the consumer key key function. */
 #define MEDIAKEY_PLAY_PAUSE     0x00
 #define MEDIAKEY_STOP           0x01
 #define MEDIAKEY_PREV_TRACK     0x02
@@ -278,8 +274,4 @@
 #define MEDIAKEY_AUDIO_VOL_UP   0x05
 #define MEDIAKEY_AUDIO_VOL_DOWN 0x06
 
-
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
 #endif
-

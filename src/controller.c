@@ -6,7 +6,6 @@
  * Project located at <https://github.com/benblazak/ergodox-firmware>
  * ------------------------------------------------------------------------- */
 
-#include <stdbool.h>
 #include <stdint.h>
 #include "matrix.h"
 #include "controller/mcp23018--functions.h"

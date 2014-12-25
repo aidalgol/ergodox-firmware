@@ -6,11 +6,9 @@
  * Project located at <https://github.com/benblazak/ergodox-firmware>
  * ------------------------------------------------------------------------- */
 
-
 #ifndef KEYBOARD__ERGODOX__CONTROLLER__MCP23018__FUNCTIONS_h
 #define KEYBOARD__ERGODOX__CONTROLLER__MCP23018__FUNCTIONS_h
 
-#include <stdbool.h>
 #include <stdint.h>
 #include "../matrix.h"
 
@@ -20,4 +18,3 @@ uint8_t mcp23018_init(void);
 uint8_t mcp23018_update_matrix(kb_matrix matrix);
 
 #endif
-

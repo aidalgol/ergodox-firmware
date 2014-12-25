@@ -6,7 +6,6 @@
  * Project located at <https://github.com/benblazak/ergodox-firmware>
  * ------------------------------------------------------------------------- */
 
-
 #ifndef TWI_h
 #define TWI_h
 
