@@ -18,7 +18,7 @@
 #include <stdint.h>
 #include <avr/pgmspace.h>
 #include "lib/data-types/misc.h"
-#include "lib/key-functions/public.h"
+#include "lib/key-functions.h"
 #include "layout.h"
 
 typedef bool kb_matrix[KB_ROWS][KB_COLUMNS];

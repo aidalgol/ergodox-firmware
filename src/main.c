@@ -11,7 +11,7 @@
 #include <stdint.h>
 #include <util/delay.h>
 #include "lib-other/pjrc/usb_keyboard/usb_keyboard.h"
-#include "lib/key-functions/public.h"
+#include "lib/key-functions.h"
 #include "controller.h"
 #include "layer.h"
 #include "matrix.h"

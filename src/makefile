@@ -27,8 +27,7 @@ SRC += $(wildcard layout/$(LAYOUT)*.c)
 # Library files
 # - should be last in the list of files to compile, in case there are default
 #   macros that have to be overridden in other source files
-SRC += $(wildcard lib/key-functions/private.c)
-SRC += $(wildcard lib/key-functions/public/*.c)
+SRC += $(wildcard lib/key-functions.c)
 SRC += $(wildcard lib/teensy-2-twi.c)
 # SRC += $(wildcard lib/usb/*.c) # TODO
 SRC += $(wildcard lib-other/pjrc/usb_keyboard/usb_keyboard.c)
