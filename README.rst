@@ -13,3 +13,13 @@ The official website for the ErgoDox is `ErgoDox.org <http://www.ergodox.org>`_.
 `` _Massdrop: https://www.massdrop.com/buy/ergodox
 `` _`build instructions`: https://www.massdrop.com/ext/ergodox/assembly.php
 `` _`web UI` https://www.massdrop.com/ext/ergodox
+
+Flashing
+--------
+(These instructions are only for the CLI Teensy loader from PJRC.)
+
+Assuming you have `teensy_loader_cli` somewhere on your `$PATH`, simply run the following commands from the `src` directory after running `make`.
+
+
+teensy_loader_cli -v -mmcu=atmega32u4 -w ../ergodox-firmware/src/firmware.eep
+teensy_loader_cli -v -mmcu=atmega32u4 -w ../ergodox-firmware/src/firmware.hex
