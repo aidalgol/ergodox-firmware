@@ -19,8 +19,8 @@ const uint8_t PROGMEM _kb_layout[KB_LAYERS][KB_ROWS][KB_COLUMNS] = {
 _shiftL,   _Z,      _X,     _C,        _V,         _B, 1,
   _guiL, _esc, _insert, _ctrlL,     _altL,
                                              _home, _end,
-                                                    _F21,
-                                         _bs, _del, _F22,
+                                                     _F1,
+                                         _bs, _del,  _F2,
 // right hand
        3,   _6,      _7,     _8,        _9,         _0,   _backslash,
     _esc,   _Y,      _U,     _I,        _O,         _P,        _dash,
@@ -28,8 +28,8 @@ _shiftL,   _Z,      _X,     _C,        _V,         _B, 1,
        1,   _N,      _M, _comma,   _period,     _slash,      _shiftR,
                  _ctrlR,  _altR, _bracketL,  _bracketR, _application,
 _pageU, _pageD,
-  _F23,
-  _F24, _enter, _space ),
+   _F3,
+   _F4, _enter, _space ),
 
 
 	KB_MATRIX_LAYER(  // layout: layer 1: function and infrequently-used keys
